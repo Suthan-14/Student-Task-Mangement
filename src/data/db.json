@@ -1,0 +1,102 @@
+{
+  "details": [
+    {
+      "id": "1",
+      "studentId": "STU001",
+      "name": "Dinesh Kumar",
+      "email": "dinesh@example.com",
+      "password": "dienshkumar123",
+      "tasks": [
+        {
+          "taskId": "T101",
+          "taskName": "OS Assignment",
+          "taskDescription": "Complete threading concepts",
+          "status": "In Progress",
+          "startingDate": "2026-04-25"
+        },
+        {
+          "taskId": "T1777718807799",
+          "taskName": "DPCO",
+          "taskDescription": "home test and practical 5 experiment",
+          "status": "Completed"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "studentId": "STU002",
+      "name": "Arun Kumar",
+      "email": "arun@example.com",
+      "password": "dienshkumar123",
+      "tasks": [
+        {
+          "taskId": "T201",
+          "taskName": "DBMS Project",
+          "taskDescription": "Design ER diagram",
+          "status": "Completed",
+          "startingDate": "2026-04-20"
+        },
+        {
+          "taskId": "T202",
+          "taskName": "Java Coding",
+          "taskDescription": "Practice hashmap programs",
+          "status": "In Progress",
+          "startingDate": "2026-04-24"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "studentId": "STU003",
+      "name": "Priya Sharma",
+      "email": "priya@example.com",
+      "password": "dineshkumar123",
+      "tasks": [
+        {
+          "taskId": "T301",
+          "taskName": "AI Notes",
+          "taskDescription": "Prepare ensemble learning notes",
+          "status": "Pending",
+          "startingDate": "2026-04-26"
+        },
+        {
+          "taskId": "T1777729191977",
+          "taskName": "math 6",
+          "taskDescription": "assignment",
+          "status": "Pending"
+        }
+      ]
+    },
+    {
+      "id": "1777728077513",
+      "studentId": "STU827",
+      "name": "DineshKumar S",
+      "email": "dineshkumars200616@gmail.com",
+      "password": "dineshkumar",
+      "tasks": [
+        {
+          "taskId": "T1777729736970",
+          "taskName": "studen task project",
+          "taskDescription": "from nyaers ",
+          "status": "In Progress"
+        }
+      ]
+    },
+    {
+      "id": "9b6d",
+      "studentId": "STU710",
+      "name": "suthan",
+      "email": "suthaajlkjlkjlk455@gmail.com",
+      "password": "sssss",
+      "tasks": [
+        {
+          "taskId": "T1777729612462",
+          "taskName": "ai",
+          "taskDescription": "assignment",
+          "status": "Completed"
+        }
+      ]
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
