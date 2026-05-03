@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   TextField,
   Button,
@@ -7,8 +8,15 @@ import {
   Typography,
   Paper
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+
+import {
+  Visibility,
+  VisibilityOff
+} from "@mui/icons-material";
+
 import { Link, useNavigate } from "react-router-dom";
+
+
 
 function SignUp() {
 
@@ -23,80 +31,136 @@ function SignUp() {
 
   const [error, setError] = useState("");
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPassword, setShowPassword] =
+    useState(false);
+
+  const [
+    showConfirmPassword,
+    setShowConfirmPassword
+  ] = useState(false);
+
+  // Handle Change
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+
   };
+
+  // Submit
 
   const handleSubmit = (e) => {
-  e.preventDefault();
 
-  if (!form.name || !form.email || !form.password || !form.confirmPassword) {
-    setError("All fields are required ❌");
-    return;
-  }
+    e.preventDefault();
 
-  if (form.password !== form.confirmPassword) {
-    setError("Passwords do not match ❌");
-    return;
-  }
+    // Validation
 
-  setError("");
+    if (
+      !form.name ||
+      !form.email ||
+      !form.password ||
+      !form.confirmPassword
+    ) {
 
-  // ✅ Create new user
-  const newUser = {
-      // json-server id
-    studentId: "STU" + Math.floor(100 + Math.random() * 900), // STU123
-    name: form.name,
-    email: form.email,
-    password: form.password,
-    tasks: []   // 👈 empty tasks
+      setError("All fields are required ❌");
+      return;
+
+    }
+
+    if (
+      form.password !==
+      form.confirmPassword
+    ) {
+
+      setError(
+        "Passwords do not match ❌"
+      );
+
+      return;
+
+    }
+
+    setError("");
+
+    // New User
+
+    const newUser = {
+
+      studentId:
+        "STU" +
+        Math.floor(
+          100 + Math.random() * 900
+        ),
+
+      name: form.name,
+
+      email: form.email,
+
+      password: form.password,
+
+      tasks: []
+
+    };
+
+    // Save User
+
+    fetch(
+      "http://localhost:4000/details",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify(newUser)
+      }
+    )
+
+      .then(() => {
+
+        // Save localStorage
+
+        localStorage.setItem(
+          "user",
+          JSON.stringify(newUser)
+        );
+
+        // Navigate
+
+        navigate("/home");
+
+      });
+
   };
 
-  // ✅ Save to API
-  fetch("http://localhost:4000/details", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(newUser)
-  })
-  .then(() => {
-    // ✅ Store logged-in user (IMPORTANT)
-    localStorage.setItem("user", JSON.stringify(newUser));
-
-    // ✅ Go to home
-    navigate("/home");
-  });
-};
-
-
-
-  
   return (
 
-    <div style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "100vh",
-      background: "#f5f5f5"
-    }}>
+    <div className="signup-container">
 
-      <Paper elevation={5} style={{
-        padding: "30px",
-        width: "100%",
-        maxWidth: "450px",
-        borderRadius: "15px"
-      }}>
+      <Paper
+        elevation={5}
+        className="signup-card"
+      >
 
-        <Typography variant="h5" align="center" gutterBottom>
-          Sign <span style={{ color: "#1976d2" }}>Up</span>
+        <Typography
+          variant="h5"
+          align="center"
+          gutterBottom
+          className="signup-title"
+        >
+
+          Sign Up
+
         </Typography>
 
         <form onSubmit={handleSubmit}>
+
+          {/* Name */}
 
           <TextField
             fullWidth
@@ -106,6 +170,8 @@ function SignUp() {
             value={form.name}
             onChange={handleChange}
           />
+
+          {/* Email */}
 
           <TextField
             fullWidth
@@ -117,74 +183,166 @@ function SignUp() {
             onChange={handleChange}
           />
 
+          {/* Password */}
+
           <TextField
             fullWidth
             label="Password"
-            type={showPassword ? "text" : "password"}
+            type={
+              showPassword
+                ? "text"
+                : "password"
+            }
+
             name="password"
+
             margin="normal"
+
             value={form.password}
+
             onChange={handleChange}
+
             InputProps={{
+
               endAdornment: (
+
                 <InputAdornment position="end">
-                  <IconButton onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
+
+                  <IconButton
+                    onClick={() =>
+                      setShowPassword(
+                        !showPassword
+                      )
+                    }
+                  >
+
+                    {
+                      showPassword
+                        ? <VisibilityOff />
+                        : <Visibility />
+                    }
+
                   </IconButton>
+
                 </InputAdornment>
+
               )
+
             }}
           />
+
+          {/* Confirm Password */}
 
           <TextField
             fullWidth
             label="Confirm Password"
-            type={showConfirmPassword ? "text" : "password"}
+
+            type={
+              showConfirmPassword
+                ? "text"
+                : "password"
+            }
+
             name="confirmPassword"
+
             margin="normal"
+
             value={form.confirmPassword}
+
             onChange={handleChange}
+
             error={
               form.confirmPassword &&
-              form.password !== form.confirmPassword
+              form.password !==
+              form.confirmPassword
             }
+
             helperText={
               form.confirmPassword &&
-              form.password !== form.confirmPassword
+              form.password !==
+              form.confirmPassword
                 ? "Passwords do not match"
                 : ""
             }
+
             InputProps={{
+
               endAdornment: (
+
                 <InputAdornment position="end">
-                  <IconButton onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+
+                  <IconButton
+                    onClick={() =>
+                      setShowConfirmPassword(
+                        !showConfirmPassword
+                      )
+                    }
+                  >
+
+                    {
+                      showConfirmPassword
+                        ? <VisibilityOff />
+                        : <Visibility />
+                    }
+
                   </IconButton>
+
                 </InputAdornment>
+
               )
+
             }}
           />
 
-          {error && (
-            <Typography color="error" align="center" style={{ marginTop: "10px" }}>
-              {error}
-            </Typography>
-          )}
+          {/* Error */}
+
+          {
+            error && (
+
+              <Typography
+                color="error"
+                align="center"
+                className="login-links"
+              >
+
+                {error}
+
+              </Typography>
+
+            )
+          }
+
+          {/* Button */}
 
           <Button
             type="submit"
             variant="contained"
             fullWidth
-            style={{ marginTop: "20px" }}
-            onClick={()=>{handleSubmit()}}
+            className="signup-btn"
           >
+
             Sign Up
+
           </Button>
 
         </form>
 
-        <Typography align="center" style={{ marginTop: "15px" }}>
-          Already have an account? <Link to="/login">Log In</Link>
+        {/* Login Link */}
+
+        <Typography
+          align="center"
+          className="login-links"
+        >
+
+          Already have an account?
+          {" "}
+
+          <Link to="/login">
+
+            Login
+
+          </Link>
+
         </Typography>
 
       </Paper>

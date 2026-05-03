@@ -7,8 +7,15 @@ import {
   Typography,
   Paper
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+
+import {
+  Visibility,
+  VisibilityOff
+} from "@mui/icons-material";
+
 import { Link, useNavigate } from "react-router-dom";
+
+
 
 function Login() {
 
@@ -21,64 +28,78 @@ function Login() {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  // Handle Input
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
   };
 
+  // Handle Submit
   const handleSubmit = (e) => {
-  e.preventDefault();
 
-  if (!form.email || !form.password) {
-    alert("Please fill all fields ❌");
-    return;
-  }
+    e.preventDefault();
 
-  // ✅ Fetch users
-  fetch("http://localhost:4000/details")
-    .then((res) => res.json())
-    .then((data) => {
+    if (!form.email || !form.password) {
+      alert("Please fill all fields ❌");
+      return;
+    }
 
-      // ✅ Find matching user
-      const user = data.find(
-        (u) =>
-          u.email === form.email &&
-          u.password === form.password
-      );
+    // Fetch users
+    fetch("http://localhost:4000/details")
+      .then((res) => res.json())
+      .then((data) => {
 
-      if (user) {
-        // ✅ Save user in localStorage
-        localStorage.setItem("user", JSON.stringify(user));
+        // Find matching user
+        const user = data.find(
+          (u) =>
+            u.email === form.email &&
+            u.password === form.password
+        );
 
-        // ✅ Go to home
-        navigate("/home");
-      } else {
-        alert("Invalid Email or Password ❌");
-      }
-    });
-};
+        if (user) {
+
+          // Save user
+          localStorage.setItem(
+            "user",
+            JSON.stringify(user)
+          );
+
+          // Navigate
+          navigate("/home");
+
+        } else {
+
+          alert("Invalid Email or Password ❌");
+
+        }
+
+      });
+
+  };
 
   return (
 
-    <div style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      height: "100vh",
-      background: "#f5f5f5"
-    }}>
+    <div className="login-container">
 
-      <Paper elevation={5} style={{
-        padding: "30px",
-        width: "100%",
-        maxWidth: "500px",   // 👈 increased width
-        borderRadius: "15px"
-      }}>
+      <Paper
+        elevation={5}
+        className="login-card"
+      >
 
-        <Typography variant="h5" align="center" gutterBottom>
+        <Typography
+          variant="h5"
+          align="center"
+          gutterBottom
+          className="login-title"
+        >
           Login
         </Typography>
 
         <form onSubmit={handleSubmit}>
+
+          {/* Email */}
 
           <TextField
             fullWidth
@@ -90,42 +111,84 @@ function Login() {
             onChange={handleChange}
           />
 
+          {/* Password */}
+
           <TextField
             fullWidth
             label="Password"
-            type={showPassword ? "text" : "password"}
+            type={
+              showPassword
+                ? "text"
+                : "password"
+            }
             name="password"
             margin="normal"
             value={form.password}
             onChange={handleChange}
             InputProps={{
               endAdornment: (
+
                 <InputAdornment position="end">
-                  <IconButton onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
+
+                  <IconButton
+                    onClick={() =>
+                      setShowPassword(
+                        !showPassword
+                      )
+                    }
+                  >
+
+                    {
+                      showPassword
+                        ? <VisibilityOff />
+                        : <Visibility />
+                    }
+
                   </IconButton>
+
                 </InputAdornment>
+
               )
             }}
           />
+
+          {/* Button */}
 
           <Button
             type="submit"
             variant="contained"
             fullWidth
-            style={{ marginTop: "20px" }}
+            className="login-btn"
           >
             Login
           </Button>
 
         </form>
 
-        <Typography align="center" style={{ marginTop: "10px" }}>
-          <a href="#">Forgot Password?</a>
+        {/* Forgot Password */}
+
+        <Typography
+          align="center"
+          className="login-links"
+        >
+          <a href="#">
+            Forgot Password?
+          </a>
         </Typography>
 
-        <Typography align="center" style={{ marginTop: "10px" }}>
-          Don't have an account? <Link to="/">Sign Up</Link>
+        {/* Signup Link */}
+
+        <Typography
+          align="center"
+          className="login-links"
+        >
+          Don't have an account?
+          {" "}
+
+          <Link to="/">
+            Sign Up
+          </Link>
+
         </Typography>
 
       </Paper>

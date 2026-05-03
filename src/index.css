@@ -1,339 +1,626 @@
-/* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ======================================================
+   GOOGLE FONT
+====================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* ======================================================
+   GLOBAL
+====================================================== */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 
-body {
-  font-family: "Segoe UI", sans-serif;
-  background-color: #f5f9ff;
-  color: #08060d;
+body{
+    min-height: 100vh;
+    background: linear-gradient(135deg,#0f172a,#1e293b,#334155);
 }
 
-/* NAVBAR */
-nav {
-  background-color:  #2563eb;
-  color: #fff;
-  height: 65px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 30px;
+/* ======================================================
+   NAVBAR
+====================================================== */
+
+nav{
+    width: 100%;
+    height: 80px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 60px;
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.3);
 }
 
-nav ul {
-  display: flex;
-  gap: 30px;
+nav h1{
+    color: white;
+    font-size: 32px;
+    font-weight: 700;
 }
 
-nav a {
-  color: white;
-  text-decoration: none;
+nav ul{
+    display: flex;
+    align-items: center;
+    gap: 30px;
 }
 
-/* CONTAINER */
-#tskcon {
-  width: 100%;
-  padding: 20px;
+nav ul a{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    transition: 0.3s;
+    position: relative;
 }
 
-/* TABLE (LINES STYLE) */
-table {
-  width: 100%;
-  border-collapse: collapse;   /* important for lines */
-  background-color: white;
+nav ul a::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0%;
+    height: 3px;
+    border-radius: 10px;
+    background: #38bdf8;
+    transition: 0.3s;
 }
 
-/* HEADER */
-thead {
-  background-color: #2563eb;
-  color: white;
+nav ul a:hover::after{
+    width: 100%;
 }
 
-th {
-  padding: 12px;
-  border: 1px solid #ccc;   /* column + row lines */
-  text-align: left;
+nav ul a:hover{
+    color: #38bdf8;
 }
 
-/* CELLS */
-td {
-  padding: 12px;
-  border: 1px solid #ccc;   /* lines */
+/* ======================================================
+   COMMON CARD STYLE
+====================================================== */
+
+.signup-card,
+.login-card,
+#uform,
+#tskcon{
+    background: rgba(255,255,255,0.08) !important;
+    backdrop-filter: blur(14px);
+    box-shadow: 0px 8px 30px rgba(0,0,0,0.35);
+    border-radius: 25px;
 }
 
-/* ROW HOVER */
-tbody tr:hover {
-  background-color: #e6f0ff;
+/* ======================================================
+   LOGIN / SIGNUP CONTAINER
+====================================================== */
+
+.signup-container,
+.login-container{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
-/* STATUS */
-.completed {
-  color: green;
-  font-weight: bold;
+/* ======================================================
+   LOGIN / SIGNUP CARD
+====================================================== */
+
+.signup-card,
+.login-card{
+    width: 100%;
+    max-width: 470px;
+    padding: 35px !important;
+    transition: 0.3s;
 }
 
-.pending {
-  color: orange;
-  font-weight: bold;
+.signup-card:hover,
+.login-card:hover,
+#uform:hover{
+    transform: translateY(-5px);
 }
 
-/* BUTTONS */
-button {
-  padding: 8px 16px;   /* 👈 bigger size */
-  border: none;
-  border-radius: 6px;
-  color: white;
-  margin-right: 8px;
-  cursor: pointer;
-  font-size: 16px;     /* 👈 text bigger */
-}
-.update {
-  background-color: #2563eb;
+/* ======================================================
+   TITLES
+====================================================== */
+
+.signup-title,
+.login-title,
+#uform h1,
+#ut{
+    color: white;
+    font-weight: 700 !important;
 }
 
-.complete {
-  background-color: #16a34a;
+.signup-title,
+.login-title{
+    font-size: 34px !important;
+    margin-bottom: 15px !important;
+    text-align: center;
 }
 
-.delete {
-  background-color: #dc2626;
+.signup-title span{
+    color: #38bdf8;
 }
 
-/* EMPTY */
-.empty {
-  text-align: center;
-  margin-top: 100px;
+#ut{
+    text-align: center;
+    margin-top: 35px;
+    font-size: 42px;
 }
 
-/* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+#uform h1{
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 30px;
 }
 
-body {
-  font-family: "Segoe UI", sans-serif;
-  background-color: #f5f9ff;
-  color: #08060d;
+/* ======================================================
+   ADD TASK FORM
+====================================================== */
+
+#uform{
+    width: 430px;
+    margin-top: 40px;
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-/* NAVBAR */
-nav {
-  background-color: #2563eb;;
-  color: #fff;
-  height: 65px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 30px;
+#taskname,
+#description{
+    width: 100%;
+    padding: 15px;
+    border-radius: 14px;
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.08);
+    color: white;
+    font-size: 16px;
+    transition: 0.3s;
 }
 
-nav h1 {
-  font-size: 26px;
+#taskname::placeholder,
+#description::placeholder{
+    color: #d1d5db;
 }
 
-nav ul {
-  display: flex;
-  gap: 30px;
-  list-style: none;
+#taskname:focus,
+#description:focus{
+    border: 2px solid #38bdf8;
+    box-shadow: 0px 0px 12px rgba(56,189,248,0.4);
 }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
+#description{
+    resize: none;
+    height: 140px;
 }
 
-nav a:hover {
-  color: #4da6ff;
+/* ======================================================
+   UPDATE PAGE
+====================================================== */
+
+.form-container{
+    width: 430px;
+    margin: 50px auto;
+    padding: 35px;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(14px);
+    box-shadow: 0px 8px 30px rgba(0,0,0,0.35);
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    transition: 0.3s;
 }
 
-/* PAGE CONTAINER */
-#tskcon {
-  width: 100%;
-  padding: 20px;
+.form-container:hover{
+    transform: translateY(-5px);
 }
 
-/* TABLE (LINE STYLE) */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: white;
+.form-container h2{
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 10px;
 }
 
-/* HEADER */
-thead {
-  background-color: #2563eb;
-  color: white;
-}
-
-th {
-  padding: 12px;
-  border: 1px solid #ccc;
-  text-align: left;
-}
-
-/* CELLS */
-td {
-  padding: 12px;
-  border: 1px solid #ccc;
-}
-
-/* ROW HOVER */
-tbody tr:hover {
-  background-color: #e6f0ff;
-}
-
-/* STATUS */
-.completed {
-  color: green;
-  font-weight: bold;
-}
-
-.pending {
-  color: orange;
-  font-weight: bold;
-}
-
-/* BUTTONS */
-button {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  margin-right: 5px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-/* BUTTON COLORS */
-.update {
-  background-color: #2563eb;
-}
-
-.complete {
-  background-color: #16a34a;
-}
-
-.delete {
-  background-color: #dc2626;
-}
-
-/* UPDATE FORM */
-.form-container {
-  width: 35%;
-  margin: 60px auto;
-  padding: 25px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.form-container h2 {
-  text-align: center;
-}
+/* INPUTS */
 
 .form-container input,
 .form-container textarea,
-.form-container select {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-.form-container button {
-  padding: 10px;
-  font-size: 16px;
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-/* EMPTY STATE */
-.empty {
-  text-align: center;
-  margin-top: 100px;
-}
-
-/* =========================
-   TABLET (below 992px)
-========================= */
-@media (max-width: 992px) {
-
-  nav {
-    flex-direction: column;
-    height: auto;
+.form-container select{
+    width: 100%;
     padding: 15px;
-    gap: 10px;
-  }
+    border-radius: 14px;
+    border: none;
+    outline: none;
 
-  nav ul {
-    gap: 15px;
-    position: static;
-  }
+    background: rgba(255,255,255,0.08);
 
-  #tskcon {
-    padding: 10px;
-  }
+    color: white;
+    font-size: 16px;
 
-  table {
-    font-size: 14px;
-  }
-
-  th, td {
-    padding: 10px;
-  }
-
-  .form-container {
-    width: 60%;
-  }
+    transition: 0.3s;
 }
 
+/* PLACEHOLDER */
 
-/* =========================
-   MOBILE (below 600px)
-========================= */
-@media (max-width: 600px) {
+.form-container input::placeholder,
+.form-container textarea::placeholder{
+    color: #d1d5db;
+}
 
-  nav h1 {
-    font-size: 20px;
-    text-align: center;
-  }
+/* TEXTAREA */
 
-  nav ul {
-    flex-direction: column;
+.form-container textarea{
+    resize: none;
+    height: 140px;
+}
+
+/* SELECT */
+
+.form-container select option{
+    background: #1e293b;
+    color: white;
+}
+
+/* FOCUS */
+
+.form-container input:focus,
+.form-container textarea:focus,
+.form-container select:focus{
+    border: 2px solid #38bdf8;
+    box-shadow: 0px 0px 12px rgba(56,189,248,0.4);
+}
+
+/* BUTTON */
+
+.form-container button{
+    height: 52px;
+    border: none;
+    border-radius: 14px;
+
+    background: linear-gradient(135deg,#38bdf8,#2563eb);
+
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
     align-items: center;
     gap: 10px;
-  }
 
-  /* TABLE → SCROLLABLE */
-  table {
-    display: block;
+    transition: 0.3s;
+
+    box-shadow: 0px 5px 15px rgba(37,99,235,0.4);
+}
+
+.form-container button:hover{
+    transform: scale(1.03);
+    background: linear-gradient(135deg,#0ea5e9,#1d4ed8);
+}
+
+
+
+/* ======================================================
+   MUI INPUT FIXED
+====================================================== */
+
+.MuiTextField-root{
+    margin-top: 18px !important;
+}
+
+.MuiOutlinedInput-root{
+    border-radius: 14px !important;
+    background: rgba(255,255,255,0.08) !important;
+    color: white !important;
+}
+
+.MuiInputBase-input{
+    color: white !important;
+    -webkit-text-fill-color: white !important;
+}
+
+.MuiOutlinedInput-root input{
+    color: white !important;
+    -webkit-text-fill-color: white !important;
+}
+
+/* LABEL */
+
+.MuiInputLabel-root{
+    color: #d1d5db !important;
+}
+
+.MuiInputLabel-root.Mui-focused{
+    color: #38bdf8 !important;
+}
+
+/* BORDER */
+
+.MuiOutlinedInput-notchedOutline{
+    border-color: rgba(255,255,255,0.2) !important;
+}
+
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline{
+    border-color: #38bdf8 !important;
+}
+
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline{
+    border-color: #38bdf8 !important;
+    box-shadow: 0px 0px 10px rgba(56,189,248,0.4);
+}
+
+/* ICON */
+
+.MuiIconButton-root{
+    color: #d1d5db !important;
+}
+
+/* AUTOFILL FIX */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill{
+    -webkit-text-fill-color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: 0 0 0px 1000px rgba(255,255,255,0.08) inset !important;
+}
+
+/* ======================================================
+   BUTTONS COMMON
+====================================================== */
+
+.signup-btn,
+.login-btn,
+#uform button,
+.empty button,
+.update,
+.complete,
+.delete{
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+    color: white;
+}
+
+/* ======================================================
+   MAIN BUTTONS
+====================================================== */
+
+.signup-btn,
+.login-btn,
+#uform button,
+.empty button{
+    height: 52px;
+    border-radius: 14px !important;
+    background: linear-gradient(135deg,#38bdf8,#2563eb) !important;
+    font-size: 18px !important;
+    text-transform: none !important;
+    box-shadow: 0px 5px 15px rgba(37,99,235,0.4);
+}
+
+.signup-btn:hover,
+.login-btn:hover,
+#uform button:hover,
+.empty button:hover{
+    transform: scale(1.03);
+    background: linear-gradient(135deg,#0ea5e9,#1d4ed8) !important;
+}
+
+/* ======================================================
+   LOGIN / SIGNUP TEXT
+====================================================== */
+
+.login-links,
+.login-text{
+    color: white;
+    margin-top: 15px !important;
+    font-size: 15px !important;
+    text-align: center;
+}
+
+.login-links a,
+.login-text a{
+    color: #38bdf8;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-links a:hover,
+.login-text a:hover{
+    text-decoration: underline;
+}
+
+/* ======================================================
+   TABLE CONTAINER
+====================================================== */
+
+#tskcon{
+    width: 95%;
+    margin: 40px auto;
+    padding: 25px;
     overflow-x: auto;
-    white-space: nowrap;
-  }
+}
 
-  th, td {
-    font-size: 13px;
-    padding: 8px;
-  }
+/* ======================================================
+   TABLE
+====================================================== */
 
-  button {
-    padding: 5px 8px;
-    font-size: 12px;
-  }
+table{
+    width: 100%;
+    border-collapse: collapse;
+    color: white;
+}
 
-  .form-container {
-    width: 90%;
-    margin: 30px auto;
-  }
+thead{
+    background: rgba(255,255,255,0.12);
+}
+
+thead th{
+    padding: 18px;
+    font-size: 18px;
+}
+
+tbody td{
+    text-align: center;
+    padding: 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+tbody tr{
+    transition: 0.3s;
+}
+
+tbody tr:hover{
+    background: rgba(255,255,255,0.08);
+}
+
+/* ======================================================
+   STATUS
+====================================================== */
+
+.completed{
+    background: rgba(34,197,94,0.2);
+    color: #4ade80;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-weight: 600;
+}
+
+.pending{
+    background: rgba(234,179,8,0.2);
+    color: #facc15;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-weight: 600;
+}
+
+/* ======================================================
+   ACTION BUTTONS
+====================================================== */
+
+.update,
+.complete,
+.delete{
+    padding: 10px 18px;
+    margin: 5px;
+    border-radius: 12px;
+    font-size: 15px;
+}
+
+.update{
+    background: linear-gradient(135deg,#0ea5e9,#2563eb);
+}
+
+.complete{
+    background: linear-gradient(135deg,#22c55e,#16a34a);
+}
+
+.delete{
+    background: linear-gradient(135deg,#ef4444,#dc2626);
+}
+
+.update:hover,
+.complete:hover,
+.delete:hover{
+    transform: scale(1.05);
+}
+
+/* ======================================================
+   EMPTY SECTION
+====================================================== */
+
+.empty{
+    width: 100%;
+    min-height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.empty h2{
+    color: white;
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.empty p{
+    color: #d1d5db;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media screen and (max-width: 900px){
+
+    nav{
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+        gap: 15px;
+    }
+
+    nav h1{
+        font-size: 24px;
+        text-align: center;
+    }
+
+    nav ul{
+        gap: 18px;
+    }
+
+    #uform{
+        width: 90%;
+    }
+
+    .signup-card,
+    .login-card{
+        padding: 25px !important;
+    }
+
+    .signup-title,
+    .login-title{
+        font-size: 28px !important;
+    }
+
+    table{
+        min-width: 750px;
+    }
+
+    .update,
+    .complete,
+    .delete{
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    .empty h2{
+        font-size: 30px;
+    }
+
+      .form-container{
+        width: 90%;
+        padding: 25px;
+    }
+
+    .form-container h2{
+        font-size: 25px;
+    }
 }

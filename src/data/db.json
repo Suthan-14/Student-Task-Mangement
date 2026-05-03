@@ -96,6 +96,21 @@
           "status": "Completed"
         }
       ]
+    },
+    {
+      "id": "3ec8",
+      "studentId": "STU333",
+      "name": "suthan",
+      "email": "suthant556@gmail.com",
+      "password": "123456789",
+      "tasks": [
+        {
+          "taskId": "T1777807234345",
+          "taskName": "full stack devolopment",
+          "taskDescription": "improve skill",
+          "status": "Pending"
+        }
+      ]
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
