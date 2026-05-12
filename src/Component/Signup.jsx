@@ -108,7 +108,7 @@ function SignUp() {
     // Save User
 
     fetch(
-      "http://localhost:4000/details",
+      "https://data-mt2k.onrender.com/details",
       {
         method: "POST",
 

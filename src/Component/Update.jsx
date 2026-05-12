@@ -19,7 +19,7 @@ const Update = () => {
 
   // 🔹 Fetch data
   useEffect(() => {
-    fetch("http://localhost:4000/details")
+    fetch("https://data-mt2k.onrender.com/details")
       .then(res => res.json())
       .then(data => setTask(data))
       .catch(() => alert("Error fetching data"))

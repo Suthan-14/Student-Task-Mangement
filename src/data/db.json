@@ -11,7 +11,7 @@
           "taskId": "T101",
           "taskName": "OS Assignment",
           "taskDescription": "Complete threading concepts",
-          "status": "In Progress",
+          "status": "Completed",
           "startingDate": "2026-04-25"
         },
         {
@@ -19,6 +19,12 @@
           "taskName": "DPCO",
           "taskDescription": "home test and practical 5 experiment",
           "status": "Completed"
+        },
+        {
+          "taskId": "T1778603008686",
+          "taskName": "'5epoiyj'e5oa",
+          "taskDescription": "ye5pojye'aoipz",
+          "status": "Pending"
         }
       ]
     },
