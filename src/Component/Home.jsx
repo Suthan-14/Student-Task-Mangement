@@ -1,68 +1,131 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const uid = user?.studentId;
 
-  let user = JSON.parse(localStorage.getItem("user"))
-  let uid = user?.studentId
+  const [task, settask] = useState([]);
+  const [finaltask, setfinaltask] = useState([]);
 
-  let [task, settask] = useState([])
-  let [finaltask, setfinaltask] = useState([])
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
-  // Fetch data
-  useEffect(() => {
+  // Fetch latest data
+  const refreshTasks = () => {
     fetch("https://api-student-data-1.onrender.com/details")
       .then((res) => res.json())
-      .then((data) => settask(data))
-  }, [])
+      .then((data) => {
+        settask(data);
 
-  // Filter user tasks
+        const student = data.find(
+          (s) => String(s.studentId) === String(uid)
+        );
+
+        setfinaltask(student?.tasks || []);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
-    const student = task.find((s) => s.studentId === uid)
-    setfinaltask(student ? student.tasks : [])
-  }, [task, uid])
+    refreshTasks();
+  }, [uid]);
 
-  // Update navigation
+  // Update page
   const hupd = (id) => {
-    navigate("/updatetask", { state: { tid: id, uid: uid } })
-  }
+    navigate("/updatetask", {
+      state: {
+        tid: id,
+        uid: uid,
+      },
+    });
+  };
 
-  // Delete
-  const handleDelete = (taskId) => {
-    const student = task.find((s) => s.studentId === uid)
+  // Delete task
+  const handleDelete = async (taskId) => {
+    try {
+      const student = task.find(
+        (s) => String(s.studentId) === String(uid)
+      );
 
-    const updatedTasks = student.tasks.filter(
-      (t) => t.taskId !== taskId
-    )
+      if (!student) {
+        alert("Student not found");
+        return;
+      }
 
-    fetch(`http://localhost:4000/details/${student.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tasks: updatedTasks })
-    }).then(() => setfinaltask(updatedTasks))
-  }
+      const updatedTasks = student.tasks.filter(
+        (t) => t.taskId !== taskId
+      );
 
-  // Complete
-  const handlecomp = (taskId) => {
-    const student = task.find((s) => s.studentId === uid)
+      const response = await fetch(
+        `https://api-student-data-1.onrender.com/details/${student.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            tasks: updatedTasks,
+          }),
+        }
+      );
 
-    const updatedTasks = student.tasks.map((t) =>
-      t.taskId === taskId ? { ...t, status: "Completed" } : t
-    )
+      if (!response.ok) {
+        throw new Error("Delete failed");
+      }
 
-    fetch(`http://localhost:4000/details/${student.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tasks: updatedTasks })
-    }).then(() => setfinaltask(updatedTasks))
-  }
+      refreshTasks();
+      alert("Task Deleted Successfully");
+    } catch (error) {
+      console.log(error);
+      alert("Delete Failed");
+    }
+  };
+
+  // Complete task
+  const handlecomp = async (taskId) => {
+    try {
+      const student = task.find(
+        (s) => String(s.studentId) === String(uid)
+      );
+
+      if (!student) {
+        alert("Student not found");
+        return;
+      }
+
+      const updatedTasks = student.tasks.map((t) =>
+        t.taskId === taskId
+          ? { ...t, status: "Completed" }
+          : t
+      );
+
+      const response = await fetch(
+        `https://api-student-data-1.onrender.com/details/${student.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            tasks: updatedTasks,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Update failed");
+      }
+
+      refreshTasks();
+      alert("Task Marked as Completed");
+    } catch (error) {
+      console.log(error);
+      alert("Update Failed");
+    }
+  };
 
   return (
     <div>
-
-      {/* NAVBAR */}
       <nav>
         <h1>Student Task Management</h1>
 
@@ -72,68 +135,83 @@ const Home = () => {
         </ul>
       </nav>
 
-      {/* TABLE */}
       <div id="tskcon">
+        {finaltask.length === 0 ? (
+          <div className="empty">
+            <h2>No Tasks Yet 😴</h2>
+            <p>Add your first task</p>
 
-        {
-          finaltask.length === 0 ? (
-            <div className="empty">
-              <h2>No Tasks Yet 😴</h2>
-              <p>Add your first task</p>
-              <button onClick={() => navigate(`/addtask/${uid}`)}>
-                Add Task
-              </button>
-            </div>
-          ) : (
+            <button
+              onClick={() => navigate(`/addtask/${uid}`)}
+            >
+              Add Task
+            </button>
+          </div>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
 
-            <table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Status</th>
-                 
-                  <th>Actions</th>
+            <tbody>
+              {finaltask.map((t) => (
+                <tr key={t.taskId}>
+                  <td>{t.taskId}</td>
+                  <td>{t.taskName}</td>
+                  <td>{t.taskDescription}</td>
+
+                  <td>
+                    <span
+                      className={
+                        t.status === "Completed"
+                          ? "completed"
+                          : "pending"
+                      }
+                    >
+                      {t.status}
+                    </span>
+                  </td>
+
+                  <td>
+                    <center>
+                      <button
+                        className="update"
+                        onClick={() => hupd(t.taskId)}
+                      >
+                        Update
+                      </button>
+
+                      <button
+                        className="complete"
+                        onClick={() => handlecomp(t.taskId)}
+                      >
+                        Complete
+                      </button>
+
+                      <button
+                        className="delete"
+                        onClick={() =>
+                          handleDelete(t.taskId)
+                        }
+                      >
+                        Delete
+                      </button>
+                    </center>
+                  </td>
                 </tr>
-              </thead>
-
-              <tbody>
-                {
-                  finaltask.map((t) => (
-                    <tr key={t.taskId}>
-                      <td>{t.taskId}</td>
-                      <td>{t.taskName}</td>
-                      <td>{t.taskDescription}</td>
-
-                      <td>
-                        <span className={t.status === "Completed" ? "completed" : "pending"}>
-                          {t.status}
-                        </span>
-                      </td>
-
-                     
-
-                      <td><center>
-
-                        <button className="update" onClick={() => hupd(t.taskId)}>Update</button>
-                        <button className="complete" onClick={() => handlecomp(t.taskId)}>Complete</button>
-                        <button className="delete" onClick={() => handleDelete(t.taskId)}>Delete</button>
-                      </center>
-                      </td>
-                    </tr>
-                  ))
-                }
-              </tbody>
-            </table>
-
-          )
-        }
-
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
