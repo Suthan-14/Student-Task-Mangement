@@ -19,7 +19,7 @@ const Update = () => {
 
   // 🔹 Fetch data
   useEffect(() => {
-    fetch("https://data-mt2k.onrender.com/details")
+    fetch("https://api-student-data-1.onrender.com/details")
       .then(res => res.json())
       .then(data => setTask(data))
       .catch(() => alert("Error fetching data"))
@@ -72,7 +72,7 @@ const Update = () => {
         : t
     );
 
-    fetch(`http://localhost:4000/details/${student.id}`, {
+    fetch(`https://api-student-data-1.onrender.com/details/${student.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ tasks: updatedTasks })

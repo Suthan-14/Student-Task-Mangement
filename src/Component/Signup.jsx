@@ -108,7 +108,7 @@ function SignUp() {
     // Save User
 
     fetch(
-      "https://data-mt2k.onrender.com/details",
+      "https://api-student-data-1.onrender.com/details",
       {
         method: "POST",
 

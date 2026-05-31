@@ -47,7 +47,7 @@ function Login() {
     }
 
     // Fetch users
-    fetch("https://data-mt2k.onrender.com/details")
+    fetch("https://api-student-data-1.onrender.com/details")
       .then((res) => res.json())
       .then((data) => {
 
